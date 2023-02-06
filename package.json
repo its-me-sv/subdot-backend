@@ -1,0 +1,23 @@
+{
+  "name": "subdot-backend",
+  "version": "1.0.0",
+  "description": "REST API for Subdot",
+  "main": "index.js",
+  "scripts": {
+    "dev": "set NODE_ENV=dev&& nodemon ./index.js",
+    "start": "node ./index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.9.0",
+    "morgan": "^1.10.0"
+  }
+}
