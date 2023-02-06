@@ -8,4 +8,4 @@ const morganConfig = (tokens, req, res) => {
     ].join(' ');
 };
 
-export default morganConfig;
+module.exports = morganConfig;
