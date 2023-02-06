@@ -10,7 +10,7 @@ app.use("/api/user", userRoute);
 
 // base route
 app.get("/", (req, res) => {
-    return res.status(200).json("Base route for CACG API");
+    return res.status(200).json("Base route for Subdot");
 });
 
 // all other invalid routes
