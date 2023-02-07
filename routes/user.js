@@ -60,4 +60,17 @@ router.post("/explore", async (req, res) => {
     }
 });
 
+// top 5 rp
+router.get("/rp-5", async (req, res) => {
+    try {
+        const docs = await User.find({})
+        .sort({reputation: "descending"})
+        .limit(5)
+        .select("accountId username reputation -_id");
+        return res.status(200).json(docs);
+    } catch (err) {
+        return res.status(500).json(JSON.stringify(err));
+    }
+});
+
 module.exports = router;
