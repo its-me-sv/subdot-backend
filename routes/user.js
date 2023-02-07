@@ -25,4 +25,23 @@ router.get("/account/:accountId", async (req, res) => {
     }
 });
 
+// create user account
+router.post("/new-account", async (req, res) => {
+    const { accountId, username, name, reputation } = req.body;
+    try {
+        const newUser = new User({
+            accountId,
+            username,
+            name,
+            reputation,
+            isCommunity: false
+        });
+        await newUser.save();
+        return res.status(200).json("Account created successfully");
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json(JSON.stringify(err));
+    }
+});
+
 module.exports = router;
