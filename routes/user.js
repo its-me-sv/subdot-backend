@@ -53,11 +53,8 @@ router.post("/explore", async (req, res) => {
                 {name: { "$regex": keyword, "$options": "i" }},
                 {username: { "$regex": keyword, "$options": "i" }} 
             ]
-        });
-        const users = docs.map(({ accountId, username, name }) => ({
-            accountId, username, name
-        }));
-        return res.status(200).json(users);
+        }).limit(10).select("accountId username name -_id");
+        return res.status(200).json(docs);
     } catch (err) {
         return res.status(500).json(JSON.stringify(err));
     }
