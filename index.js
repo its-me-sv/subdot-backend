@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 
 // all other invalid routes
 app.get("/*", (req, res) => {
-    res.redirect('/');
+    return res.status(400).json("Invalid route");
 });
 
 const PORT = process.env.port || 5000;
