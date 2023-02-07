@@ -80,7 +80,7 @@ router.post("/rp", async (req, res) => {
         const docs = await User.find({})
         .sort({ reputation: "descending" })
         .skip(skip)
-        .limit(5)
+        .limit(7)
         .select("accountId username reputation -_id");
         return res.status(200).json(docs);
     } catch (err) {
