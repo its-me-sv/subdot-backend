@@ -18,6 +18,10 @@ const UserSchema = new mongoose.Schema({
     },
     reputation: {
         type: Number,
+        default: 1
+    },
+    likes: {
+        type: Number,
         default: 0
     },
     isCommunity: {
