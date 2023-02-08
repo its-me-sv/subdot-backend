@@ -88,4 +88,16 @@ router.post("/rp", async (req, res) => {
     }
 });
 
+// get user's rp
+router.get("/user-rp/:accountId", async (req, res) => {
+    try {
+        const doc = await User.findOne({
+            accountId: req.params.accountId
+        }).select("reputation -_id");
+        return res.status(200).json(doc.reputation);
+    } catch (err) {
+        return res.status(500).json(JSON.stringify(err));
+    }
+});
+
 module.exports = router;
