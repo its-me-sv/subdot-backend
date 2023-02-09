@@ -113,4 +113,17 @@ router.put("/user-edit/:accountId", async (req, res) => {
     }
 });
 
+// incr RP
+router.put("/incr-rp/:accountId/:points", async (req, res) => {
+    try {
+        await User.findOneAndUpdate(
+            { accountId: req.params.accountId },
+            { $inc: {'reputation': Number(req.params.points)}}
+        );
+        return res.status(200).json("Incremented RP");
+    } catch (err) {
+        return res.status(500).json(JSON.stringify(err));
+    }
+});
+
 module.exports = router;
