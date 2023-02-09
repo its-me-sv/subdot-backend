@@ -7,7 +7,7 @@ router.get("/username/:username", async (req, res) => {
     try {
         const doc = await User.findOne({username});
         if (!doc) return res.status(200).json({presence: false});
-        return res.status(200).json({ presence: true });
+        return res.status(200).json({ presence: true, accountId: doc.accountId });
     } catch (err) {
         return res.status(500).json(JSON.stringify(err));
     }
