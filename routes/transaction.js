@@ -14,7 +14,7 @@ router.post("/new", async (req, res) => {
 });
 
 // fetch all transactions by accountId
-router.get("/:accountId", async (req, res) => {
+router.post("/:accountId", async (req, res) => {
     const {accountId} = req.params;
     try {
         const skip = req.body?.skip || 0;
