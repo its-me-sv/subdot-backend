@@ -17,7 +17,12 @@ router.post("/new", async (req, res) => {
 router.get("/:accountId", async (req, res) => {
     const {accountId} = req.params;
     try {
-        return res.status(200).json(`${req.params.accountId}'s transactions`);
+        const skip = req.body?.skip || 0;
+        const docs = await Transaction.find({accountId})
+        .sort({ createdAt: "descending" })
+        .skip(skip)
+        .limit(7);
+        return res.status(200).json(docs);
     } catch (err) {
         return res.status(500).json(JSON.stringify(err));
     }
