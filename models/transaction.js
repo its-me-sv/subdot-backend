@@ -4,7 +4,6 @@ const TransactionSchema = new mongoose.Schema({
     accountId: {
         type: String,
         required: true,
-        unique: true
     },
     desc: {
         type: String,
