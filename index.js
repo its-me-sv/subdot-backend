@@ -6,7 +6,10 @@ const {app} = require("./utils/server");
 combineMiddlewares(app);
 
 const userRoute = require("./routes/user");
+const transactionRoute = require("./routes/transaction");
+
 app.use("/api/user", userRoute);
+app.use("/api/transaction", transactionRoute);
 
 // base route
 app.get("/", (req, res) => {
