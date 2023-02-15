@@ -1,15 +1,13 @@
 require("dotenv").config();
+
 const mongoose = require("mongoose");
-
 const combineMiddlewares = require("./utils/middleware");
+const combineRoutes = require("./routes");
+
 const {app} = require("./utils/server");
+
 combineMiddlewares(app);
-
-const userRoute = require("./routes/user");
-const transactionRoute = require("./routes/transaction");
-
-app.use("/api/user", userRoute);
-app.use("/api/transaction", transactionRoute);
+combineRoutes(app);
 
 // base route
 app.get("/", (req, res) => {
