@@ -6,7 +6,7 @@ const morganConfig = require("./morgan");
 
 const corsConfig = {
     optionsSuccessStatus: 200,
-    origin: "https://subdot.netlify.app/"
+    origin: "https://subdot.netlify.app"
 };
 
 const combineMiddlewares = (app) => {
