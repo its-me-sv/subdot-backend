@@ -20,7 +20,7 @@ router.post("/new", async (req, res) => {
 router.get("/", async (req, res) => {
     try {
         const docs = await Advert.find({});
-        return res.status(200).json(docs);
+        return res.status(200).json(docs[0]);
     } catch (err) {
         return res.status(500).json(JSON.stringify(err));
     }
