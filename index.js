@@ -1,10 +1,10 @@
 require("dotenv").config();
 
 const mongoose = require("mongoose");
-const combineMiddlewares = require("./utils/middleware");
-const combineRoutes = require("./routes");
+const combineMiddlewares = require("./src/utils/middleware");
+const combineRoutes = require("./src/routes");
 
-const {app} = require("./utils/server");
+const {app} = require("./src/utils/server");
 
 combineMiddlewares(app);
 combineRoutes(app);
@@ -19,7 +19,7 @@ app.get("/*", (req, res) => {
     return res.status(400).json("Invalid route");
 });
 
-const PORT = process.env.port || 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, async () => {
     console.clear();
     console.log(`[SERVER] Listening to PORT ${PORT}`);
