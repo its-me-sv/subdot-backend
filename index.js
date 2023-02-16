@@ -1,13 +1,23 @@
 require("dotenv").config();
 
 const mongoose = require("mongoose");
-const combineMiddlewares = require("./src/utils/middleware");
-const combineRoutes = require("./src/routes");
+const express = require("express");
+const morgan = require("morgan");
+const cors = require("cors");
+
+const userRoute = require("./src/routes/user");
+const transactionRoute = require("./src/routes/transaction");
+const advertRoute = require("./src/routes/advert");
 
 const {app} = require("./src/utils/server");
 
-combineMiddlewares(app);
-combineRoutes(app);
+app.use(cors());
+app.use(morgan("tiny"));
+app.use(express.json());
+
+app.use("/api/user", userRoute);
+app.use("/api/transaction", transactionRoute);
+app.use("/api/advert", advertRoute);
 
 // base route
 app.get("/", (req, res) => {
