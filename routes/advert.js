@@ -19,8 +19,10 @@ router.post("/new", async (req, res) => {
 // fetch advertisement
 router.get("/", async (req, res) => {
     try {
-        const docs = await Advert.find({});
-        return res.status(200).json(docs[0]);
+        const docs = await Advert.find({})
+        .sort({expires: "descending"})
+        .limit(1);
+        return res.status(200).json(docs[0] || null);
     } catch (err) {
         return res.status(500).json(JSON.stringify(err));
     }
