@@ -15,7 +15,7 @@ const AdvertSchema = new mongoose.Schema({
     },
     expires: {
         type: Date,
-        required: true
+        required: true,
     }
 });
 
