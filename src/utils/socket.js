@@ -40,6 +40,11 @@ const socketHandler = io => {
             socket.broadcast.to(roomId).emit("unfollow", userId);
             console.log(`[SOCKET] ${socket.id} unfollowed ${roomId}`);
         });
+
+        socket.on("incrRP", (roomId, rp) => {
+            socket.broadcast.to(roomId).emit("incrRP", Number(rp));
+            console.log(`[SOCKET] ${socket.id} incremented ${roomId}'s rp`);
+        });
     });
 };
 
