@@ -25,6 +25,21 @@ const socketHandler = io => {
             socket.broadcast.to(roomId).emit("newTx", msg);
             console.log(`[SOCKET] ${socket.id} transfered amount to ${roomId}`);
         });
+
+        socket.on("notify", (roomId, msg) => {
+            socket.broadcast.to(roomId).emit("notify", msg);
+            console.log(`[SOCKET] ${socket.id} notified ${roomId}`);
+        });
+
+        socket.on("follow", (roomId, userId) => {
+            socket.broadcast.to(roomId).emit("follow", userId);
+            console.log(`[SOCKET] ${socket.id} followed ${roomId}`);
+        });
+
+        socket.on("unfollow", (roomId, userId) => {
+            socket.broadcast.to(roomId).emit("unfollow", userId);
+            console.log(`[SOCKET] ${socket.id} unfollowed ${roomId}`);
+        });
     });
 };
 
