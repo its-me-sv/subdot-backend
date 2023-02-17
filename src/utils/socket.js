@@ -20,6 +20,11 @@ const socketHandler = io => {
             socket.broadcast.to("advert").emit("newAdvert", advert);
             console.log(`[SOCKET] ${socket.id} published advertisement with id: ${advert._id}`);
         });
+
+        socket.on("newTx", (roomId, msg) => {
+            socket.broadcast.to(roomId).emit("newTx", msg);
+            console.log(`[SOCKET] ${socket.id} transfered amount to ${roomId}`);
+        });
     });
 };
 
