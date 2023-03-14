@@ -1,4 +1,5 @@
 require("dotenv").config();
+require("./src/utils/astra");
 
 const mongoose = require("mongoose");
 const combineMiddlewares = require("./src/utils/middleware");
@@ -32,9 +33,9 @@ const server = httpServer.listen(PORT, async () => {
             useUnifiedTopology: true,
             dbName: "subdot"
         });
-        console.log("[SERVER] Database connection SUCCESS");
+        console.log("[SERVER] Connected to MongoDB");
     } catch (err) {
-        console.log(`[SERVER] Database connection FAILURE - ${err.message}`);
+        console.log(`[SERVER] MongoDB connection FAILURE - ${err.message}`);
     }
 });
 
