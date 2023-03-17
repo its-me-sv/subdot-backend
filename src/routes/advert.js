@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const {types} = require("cassandra-driver");
 const cqlClient = require("../utils/astra");
-const Advert = require("../models/advert");
 
 // add new advertisement
 router.post("/new", async (req, res) => {
@@ -40,10 +39,20 @@ router.post("/new", async (req, res) => {
 // fetch advertisement
 router.get("/", async (req, res) => {
     try {
-        const docs = await Advert.find({})
-        .sort({expires: "descending"})
-        .limit(1);
-        return res.status(200).json(docs[0] || null);
+        const QUERY = `SELECT * FROM advertisements LIMIT 1;`;
+        const data = await cqlClient.execute(QUERY);
+        const advert = data.rows[0];
+        if (!data.rowLength || !advert) 
+            return res.status(200).json(null);
+        const resBody = {
+            accountId: advert.account_id,
+            picture: advert.picture,
+            link: advert.link,
+            expires: advert.expires,
+            _id: advert.created_at,
+            __v: 0
+        };
+        return res.status(200).json(resBody);
     } catch (err) {
         return res.status(500).json(JSON.stringify(err));
     }
