@@ -2,10 +2,20 @@
 
 [![wakatime](https://wakatime.com/badge/user/77078a50-96cc-4da2-b32c-08e468259a40/project/59a3cf80-d249-41dd-bcc6-f988e1517d3f.svg)](https://wakatime.com/badge/user/77078a50-96cc-4da2-b32c-08e468259a40/project/59a3cf80-d249-41dd-bcc6-f988e1517d3f)
 
-### Project link - https://subdot.netlify.app
-### Demo video - https://youtu.be/JVkSsFW-gHE
-
 #### `Note`: This is the back end code of Subdot and the front end code can be found in this repository - https://github.com/its-me-sv/subdot-frontend
+
+## Latest enhancements in the "APAC edition":
+1. User-to-user communication via chat [pending implementation]
+2. Advertisement posting dashboard with filtering for adult content [pending implementation]
+3. Rewarding top users with fund transfers based on RP score [pending implementation]
+4. Extra statistical information on the reputation page [pending implementation]
+5. Public sharing of posts [pending implementation]
+
+Project link - https://subdot.netlify.app
+
+Demo video (APAC edition) - https://youtu.be/JVkSsFW-gHE
+
+Demo video (Europe edition) - https://youtu.be/JVkSsFW-gHE
 
 ## Setup:
 1. Update the `allowedOrigins` value in the `src/utils/origins.js`
