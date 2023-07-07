@@ -15,3 +15,19 @@ CREATE TABLE advertisements (
     expires TIMESTAMP,
     PRIMARY KEY (created_at)
 );
+
+CREATE TABLE user_reputation_per_month (
+    year INT,
+    month INT,
+    user_id TEXT,
+    reputation INT,
+    reputation_details MAP<TEXT, INT>,
+    PRIMARY KEY ((year, month), user_id)
+);
+
+CREATE TABLE user_reputation_all_time (
+    user_id TEXT,
+    reputation INT,
+    reputation_details MAP<TEXT, INT>,
+    PRIMARY KEY (user_id)
+);
