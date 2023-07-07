@@ -53,7 +53,7 @@ router.post("/explore", async (req, res) => {
                 {name: { "$regex": keyword, "$options": "i" }},
                 {username: { "$regex": keyword, "$options": "i" }} 
             ]
-        }).limit(10).select("accountId username name -_id");
+        }).limit(10).select("accountId username name reputation -_id");
         return res.status(200).json(docs);
     } catch (err) {
         return res.status(500).json(JSON.stringify(err));
