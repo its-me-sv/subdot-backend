@@ -16,18 +16,31 @@ CREATE TABLE advertisements (
     PRIMARY KEY (created_at)
 );
 
+CREATE TABLE messages (
+    chat_id TEXT,
+    message_id TIMEUUID,
+    ipfs_content_id TEXT,
+    PRIMARY KEY (chat_id, message_id)
+) WITH CLUSTERING ORDER BY (message_id DESC);
+
 CREATE TABLE user_reputation_per_month (
     year INT,
     month INT,
     user_id TEXT,
-    reputation INT,
-    reputation_details MAP<TEXT, INT>,
+    total_rp COUNTER,
+    e5p COUNTER,
+    p10f COUNTER,
+    ptg COUNTER,
+    ac COUNTER,
     PRIMARY KEY ((year, month), user_id)
 );
 
 CREATE TABLE user_reputation_all_time (
     user_id TEXT,
-    reputation INT,
-    reputation_details MAP<TEXT, INT>,
+    total_rp COUNTER,
+    e5p COUNTER,
+    p10f COUNTER,
+    ptg COUNTER,
+    ac COUNTER,
     PRIMARY KEY (user_id)
 );
