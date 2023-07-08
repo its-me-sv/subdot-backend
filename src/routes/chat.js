@@ -1,0 +1,50 @@
+const router = require("express").Router();
+const { types } = require("cassandra-driver");
+const cqlClient = require("../utils/astra");
+
+router.post("/:sender/:reciever/:ipfs_id", async (req, res) => {
+    try {
+        const {sender, reciever, ipfs_id} = req.params;
+        const chatId = [sender, reciever].sort().join("###");
+        const message_id = types.TimeUuid.now().toString();
+        const query = `
+            INSERT INTO messages(chat_id, message_id, ipfs_content_id)
+            VALUES (?, ?, ?);
+        `;
+        const values = [chatId, message_id, ipfs_id];
+        await cqlClient.execute(query, values, {prepare: true});
+        return res.status(200).json({
+            message_id,
+            created_at: new Date().toISOString(),
+            ipfs_content_id: ipfs_id
+        });
+    } catch (err) {
+        return res.status(500).json(JSON.stringify(err));
+    }
+});
+
+router.post("/:sender/:reciever", async (req, res) => {
+    try {
+        const {sender, reciever} = req.params;
+        const currPage = req.body.page || null;
+        const chatId = [sender, reciever].sort().join("###");
+        const QUERY = `
+            SELECT message_id, totimestamp(message_id) as created_at, 
+            ipfs_content_id FROM messages
+            WHERE chat_id = ?;
+        `;
+        const VALUE = [chatId];
+        const data = await cqlClient.execute(QUERY, VALUE, {
+            pageState: currPage,
+            fetchSize: 14
+        });
+        return res.status(200).json({
+            messages: data.rows || [],
+            page: data.pageState
+        });
+    } catch (err) {
+        return res.status(500).json(JSON.stringify(err));
+    }
+});
+
+module.exports = router;
