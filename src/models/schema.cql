@@ -20,6 +20,7 @@ CREATE TABLE messages (
     chat_id TEXT,
     message_id TIMEUUID,
     ipfs_content_id TEXT,
+    verified BOOLEAN,
     PRIMARY KEY (chat_id, message_id)
 ) WITH CLUSTERING ORDER BY (message_id DESC);
 
