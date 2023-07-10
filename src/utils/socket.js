@@ -45,6 +45,11 @@ const socketHandler = io => {
             socket.broadcast.to(roomId).emit("incrRP", Number(rp));
             console.log(`[SOCKET] ${socket.id} incremented ${roomId}'s rp`);
         });
+
+        socket.on("newMessage", (roomId, msg) => {
+            socket.broadcast.to(roomId).emit("newMessage", msg);
+            console.log(`[SOCKET] ${socket.id} sent message to ${roomId}`);
+        });
     });
 };
 

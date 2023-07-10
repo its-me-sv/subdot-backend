@@ -11,7 +11,7 @@ router.post("/:sender/:reciever/:ipfs_id", async (req, res) => {
         const query = `
             INSERT INTO messages(chat_id, message_id, ipfs_content_id, verified)
             VALUES (?, ?, ?, false)
-            USING TTL 30;
+            USING TTL 600;
         `;
         const values = [chatId, message_id, ipfs_id];
         await cqlClient.execute(query, values, {prepare: true});
