@@ -51,7 +51,8 @@ router.post("/explore", async (req, res) => {
         const docs = await User.find({
             $or: [
                 {name: { "$regex": keyword, "$options": "i" }},
-                {username: { "$regex": keyword, "$options": "i" }} 
+                {username: { "$regex": keyword, "$options": "i" }},
+                {accountId: { "$regex": keyword, "$options": "i" }},
             ]
         }).limit(10).select("accountId username name reputation -_id");
         return res.status(200).json(docs);
