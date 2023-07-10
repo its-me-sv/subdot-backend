@@ -10,7 +10,8 @@ router.post("/:sender/:reciever/:ipfs_id", async (req, res) => {
         const message_id = types.TimeUuid.now().toString();
         const query = `
             INSERT INTO messages(chat_id, message_id, ipfs_content_id, verified)
-            VALUES (?, ?, ?, false);
+            VALUES (?, ?, ?, false)
+            USING TTL 30;
         `;
         const values = [chatId, message_id, ipfs_id];
         await cqlClient.execute(query, values, {prepare: true});
@@ -26,16 +27,17 @@ router.post("/:sender/:reciever/:ipfs_id", async (req, res) => {
 });
 
 // update verification status
-router.put("/:sender/:reciever/:msgId", async (req, res) => {
+router.put("/:sender/:reciever/:ipfs_id/:msgId", async (req, res) => {
     try {
-        const { sender, reciever, msgId } = req.params;
+        const { sender, reciever, msgId, ipfs_id } = req.params;
         const chatId = [sender, reciever].sort().join("###");
         const query = `
             UPDATE messages
-            SET verified = true
+            USING TTL 0
+            SET verified = true, ipfs_content_id = ?
             WHERE chat_id = ? AND message_id = ?;
         `;
-        const param = [chatId, msgId];
+        const param = [ipfs_id, chatId, msgId];
         await cqlClient.execute(query, param, {prepare: true});
         return res.status(200).json("SUCCESS");
     } catch (err) {
