@@ -52,8 +52,8 @@ router.post("/:sender/:reciever", async (req, res) => {
         const currPage = req.body.page || null;
         const chatId = [sender, reciever].sort().join("###");
         const QUERY = `
-            SELECT message_id, totimestamp(message_id) as created_at, 
-            ipfs_content_id FROM messages
+            SELECT message_id, totimestamp(message_id) as created_at,
+            ipfs_content_id, verified  FROM messages
             WHERE chat_id = ?;
         `;
         const VALUE = [chatId];
