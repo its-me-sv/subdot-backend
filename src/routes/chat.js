@@ -59,7 +59,7 @@ router.post("/:sender/:reciever", async (req, res) => {
         const VALUE = [chatId];
         const data = await cqlClient.execute(QUERY, VALUE, {
             pageState: currPage,
-            fetchSize: 14
+            fetchSize: 20
         });
         return res.status(200).json({
             messages: data.rows || [],
