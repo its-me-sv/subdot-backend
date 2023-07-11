@@ -55,6 +55,11 @@ const socketHandler = io => {
             io.to(roomId).emit("verifyMessage");
             console.log(`[SOCKET] ${socket.id} verified message`);
         });
+
+        socket.on("newMessageNotification", (roomId, msg) => {
+            socket.broadcast.to(roomId).emit("newMessageNotification", msg);
+            console.log(`[SOCKET] ${socket.id} notified ${roomId}`);
+        });
     });
 };
 
