@@ -52,7 +52,7 @@ const socketHandler = io => {
         });
 
         socket.on("verifyMessage", roomId => {
-            socket.broadcast.to(roomId).emit("verifyMessage");
+            io.to(roomId).emit("verifyMessage");
             console.log(`[SOCKET] ${socket.id} verified message`);
         });
     });
