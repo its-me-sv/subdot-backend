@@ -4,8 +4,8 @@
 
 #### `Note`: This is the back end code of Subdot and the front end code can be found in this repository - https://github.com/its-me-sv/subdot-frontend
 
-## Latest enhancements in the "APAC edition":
-1. User-to-user communication via chat [pending implementation]
+## APAC Roadmap: Latest Enhancements in the "APAC Edition"
+1. User-to-user communication via chat [implemented]
 2. Advertisement posting dashboard with filtering for adult content [pending implementation]
 3. Rewarding top users with fund transfers based on RP score [pending implementation]
 4. Extra statistical information on the reputation page [pending implementation]
