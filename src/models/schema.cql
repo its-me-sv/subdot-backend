@@ -7,15 +7,6 @@ CREATE TABLE transactions (
     PRIMARY KEY (account_id, created_at)
 ) WITH CLUSTERING ORDER BY (created_at ASC);
 
-CREATE TABLE advertisements (
-    created_at TIMEUUID,
-    account_id TEXT,
-    picture TEXT,
-    link TEXT,
-    expires TIMESTAMP,
-    PRIMARY KEY (created_at)
-);
-
 CREATE TABLE messages (
     chat_id TEXT,
     message_id TIMEUUID,
@@ -44,4 +35,19 @@ CREATE TABLE user_reputation_all_time (
     ptg COUNTER,
     ac COUNTER,
     PRIMARY KEY (user_id)
+);
+
+CREATE TABLE advertisements (
+    created_at TIMEUUID,
+    account_id TEXT,
+    picture TEXT,
+    link TEXT,
+    expires TIMESTAMP,
+    PRIMARY KEY (created_at)
+);
+
+CREATE TABLE advertisements_reach (
+    created_at TIMEUUID,
+    reach COUNTER,
+    PRIMARY KEY (created_at)
 );
