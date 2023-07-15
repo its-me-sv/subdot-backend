@@ -49,5 +49,6 @@ CREATE TABLE advertisements (
 CREATE TABLE advertisements_reach (
     created_at TIMEUUID,
     reach COUNTER,
+    clicks COUNTER,
     PRIMARY KEY (created_at)
 );
