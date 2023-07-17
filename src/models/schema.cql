@@ -52,3 +52,9 @@ CREATE TABLE advertisements_reach (
     clicks COUNTER,
     PRIMARY KEY (created_at)
 );
+
+CREATE TABLE user_adverts (
+    account_id TEXT,
+    advert_id TIMEUUID,
+    PRIMARY KEY (account_id)
+);
