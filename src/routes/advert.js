@@ -58,6 +58,25 @@ router.get("/", async (req, res) => {
     }
 });
 
+// fetch advert of user
+router.get("/user/:user_id", async (req, res) => {
+    try {
+        let {user_id} = req.params;
+        const QUERY = `
+            SELECT advert_id 
+            FROM user_adverts
+            WHERE account_id = ?;
+        `;
+        const PARAM = [user_id];
+        const data = await cqlClient.execute(QUERY, PARAM, {prepare: true});
+        return res.status(200).json({
+            advert_id: data.rows[0].advert_id || ""
+        });
+    } catch (err) {
+        return res.status(500).json(JSON.stringify(err));
+    }
+});
+
 // fetch advert stats by advert id
 router.get("/stat/:advert_id", async (req, res) => {
     try {
