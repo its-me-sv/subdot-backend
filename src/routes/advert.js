@@ -58,4 +58,40 @@ router.get("/", async (req, res) => {
     }
 });
 
+// fetch advert stats by advert id
+router.get("/stat/:advert_id", async (req, res) => {
+    try {
+        const {advert_id} = req.params;
+        let responseBody = {
+            posted: new Date().toISOString(),
+            expires: new Date().toISOString(),
+            investment: 1,
+            views: 0,
+            engagement: 0
+        };
+        let query = `
+            SELECT totimestamp(created_at) as posted,
+            totimestamp(expires) as expires
+            FROM advertisements
+            WHERE created_at = ?;
+        `;
+        let value = [advert_id];
+        let data = (await cqlClient.execute(query, value, {prepare: true})).rows[0];
+        responseBody.posted = data.posted;
+        responseBody.expires = data.expires;
+        query = `
+            SELECT reach as views, clicks as engagement
+            FROM advertisements_reach
+            WHERE created_at = ?;
+        `;
+        value = [advert_id];
+        data = (await cqlClient.execute(query, value, { prepare: true })).rows[0];
+        responseBody.views = data.views;
+        responseBody.engagement = data.engagement;
+        return res.status(200).json(responseBody);
+    } catch (err) {
+        return res.status(500).json(JSON.stringify(err));
+    }
+});
+
 module.exports = router;
