@@ -33,9 +33,9 @@ router.post("/new", async (req, res) => {
         // inserting into user_adverts table
         QUERY = `
             INSERT INTO user_adverts (account_id, advert_id)
-            VALUES (?, ?);
+            VALUES (?, ?) USING TTL ?;
         `;
-        VALUE = [accountId, adId];
+        VALUE = [accountId, adId, expSec];
         await cqlClient.execute(QUERY, VALUE, { prepare: true });
         return res.status(200).json(resBody);
     } catch (err) {
@@ -107,14 +107,14 @@ router.get("/stat/:advert_id", async (req, res) => {
         };
         let query = `
             SELECT totimestamp(created_at) as posted,
-            totimestamp(expires) as expires
+            expires
             FROM advertisements
             WHERE created_at = ?;
         `;
         let value = [advert_id];
         let data = (await cqlClient.execute(query, value, {prepare: true})).rows[0];
-        responseBody.posted = data.posted;
-        responseBody.expires = data.expires;
+        responseBody.posted = data.posted || new Date().toISOString();
+        responseBody.expires = data.expires || new Date().toISOString();
         query = `
             SELECT reach as views, clicks as engagement
             FROM advertisements_reach
@@ -122,8 +122,8 @@ router.get("/stat/:advert_id", async (req, res) => {
         `;
         value = [advert_id];
         data = (await cqlClient.execute(query, value, { prepare: true })).rows[0];
-        responseBody.views = data.views;
-        responseBody.engagement = data.engagement;
+        responseBody.views = data?.views || 0;
+        responseBody.engagement = data?.engagement || 0;
         return res.status(200).json(responseBody);
     } catch (err) {
         return res.status(500).json(JSON.stringify(err));
