@@ -12,7 +12,7 @@ router.post("/new", async (req, res) => {
             (created_at, account_id, picture, link, expires) 
             VALUES (?, ?, ?, ?, ?) USING TTL ?;
         `;
-        const adId = types.TimeUuid.fromDate(new Date(startedAt)).toString();
+        const adId = types.TimeUuid.fromDate(new Date(new Date(startedAt).getTime() + 1000)).toString();
         const expSec = Math.floor((new Date(expires).getTime() - Date.now()) / 1000);
         let VALUE = [
             adId, 
@@ -43,6 +43,21 @@ router.post("/new", async (req, res) => {
     }
 });
 
+// get last advertisement date
+router.get("/last", async (req, res) => {
+    try {
+        const query = `
+            SELECT expires
+            FROM advertisements;
+        `;
+        const data = await cqlClient.execute(query);
+        return res.status(200).json(data.rows.slice(-1)[0] || "");
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json(JSON.stringify(err));
+    }
+});
+
 // fetch advert of user
 router.get("/user/:user_id", async (req, res) => {
     try {
@@ -55,7 +70,7 @@ router.get("/user/:user_id", async (req, res) => {
         const PARAM = [user_id];
         const data = await cqlClient.execute(QUERY, PARAM, {prepare: true});
         return res.status(200).json({
-            advert_id: data.rows[0].advert_id || ""
+            advert_id: data?.rows[0]?.advert_id || ""
         });
     } catch (err) {
         return res.status(500).json(JSON.stringify(err));
