@@ -13,6 +13,7 @@
     "nodemon": "^2.0.20"
   },
   "dependencies": {
+    "@google-cloud/vision": "^3.1.4",
     "cassandra-driver": "^4.6.4",
     "cloudinary": "^1.37.3",
     "cors": "^2.8.5",

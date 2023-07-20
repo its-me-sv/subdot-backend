@@ -5,6 +5,7 @@ const fs = require("fs");
 const cqlClient = require("../utils/astra");
 const {multerUploads, multerError} = require("../utils/multer");
 const {uploadImage} = require("../utils/cloudinary");
+const {hasNSFW} = require("../utils/utils");
 
 // add new advertisement
 router.post("/new", async (req, res) => {
@@ -137,13 +138,19 @@ router.get("/stat/:advert_id", async (req, res) => {
 // checking for explicit content
 router.post("/check-nsfw", multerUploads, async (req, res) => {
     try {
-        const uploadResult = await uploadImage(req.file.path);
-        fs.unlinkSync(req.file.path);
+        const file = req.file;
+        if (!file) {
+            return res.status(400).json({ error: 'No image file provided.' });
+        }
+        const filePath = file.path;
+        if (await hasNSFW(filePath))
+            return res.status(400).json("Has nsfw");
+        const uploadResult = await uploadImage(filePath);
+        fs.unlinkSync(filePath);
         return res.status(200).json({
             picture: uploadResult.secure_url
         });
     } catch (err) {
-        console.log(err);
         return res.status(500).json(JSON.stringify(err));
     }
 });
