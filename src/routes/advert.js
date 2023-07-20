@@ -1,6 +1,10 @@
 const router = require("express").Router();
 const {types} = require("cassandra-driver");
+
 const cqlClient = require("../utils/astra");
+const {multerUploads, multerError} = require("../utils/multer");
+const {convertToDataURI} = require("../utils/utils");
+const {uploadImage} = require("../utils/cloudinary");
 
 // add new advertisement
 router.post("/new", async (req, res) => {
@@ -125,6 +129,19 @@ router.get("/stat/:advert_id", async (req, res) => {
         responseBody.views = data?.views || 0;
         responseBody.engagement = data?.engagement || 0;
         return res.status(200).json(responseBody);
+    } catch (err) {
+        return res.status(500).json(JSON.stringify(err));
+    }
+});
+
+// checking for explicit content
+router.post("/check-nsfw", multerUploads, async (req, res) => {
+    try {
+        const imageUri = convertToDataURI(req.file);
+        const uploadResult = await uploadImage(imageUri);
+        return res.status(200).json({
+            picture: uploadResult
+        });
     } catch (err) {
         return res.status(500).json(JSON.stringify(err));
     }
