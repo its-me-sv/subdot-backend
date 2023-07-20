@@ -157,4 +157,22 @@ router.post("/check-nsfw", multerUploads, async (req, res) => {
     }
 });
 
+// fetch advertisements
+router.get("/", async (req, res) => {
+    try {
+        const QUERY = `
+            SELECT created_at as id, 
+            totimestamp(created_at) as crtd, 
+            picture, link, expires
+            FROM advertisements;
+        `;
+        const data = await cqlClient.execute(QUERY);
+        return res.status(200).json({
+            adverts: data.rows
+        });
+    } catch (err) {
+        return res.status(500).json(JSON.stringify(err));
+    }
+});
+
 module.exports = router;

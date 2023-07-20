@@ -17,7 +17,7 @@ const socketHandler = io => {
         });
 
         socket.on("newAdvert", advert => {
-            socket.broadcast.to("advert").emit("newAdvert", advert);
+            io.to("advert").emit("newAdvert", advert);
             console.log(`[SOCKET] ${socket.id} published advertisement with id: ${advert._id}`);
         });
 
