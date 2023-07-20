@@ -143,8 +143,10 @@ router.post("/check-nsfw", multerUploads, async (req, res) => {
             return res.status(400).json({ error: 'No image file provided.' });
         }
         const filePath = file.path;
-        if (await hasNSFW(filePath))
+        if (await hasNSFW(filePath)) {
+            fs.unlinkSync(filePath);
             return res.status(400).json("Has nsfw");
+        }
         const uploadResult = await uploadImage(filePath);
         fs.unlinkSync(filePath);
         return res.status(200).json({
