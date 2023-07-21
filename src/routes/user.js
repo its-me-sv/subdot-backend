@@ -154,4 +154,21 @@ router.get("/all-time-stats/:accountId", async (req, res) => {
     }
 });
 
+// update all time rp
+router.put("/all-time-stats/:accountId/:kind/:cnt", async (req, res) => {
+    try {
+        const {accountId, kind, cnt} = req.params;
+        const QUERY = `
+            UPDATE user_reputation_all_time
+            SET total_rp = total_rp + ?, ${kind} = ${kind} + ?
+            WHERE user_id = ?;
+        `;
+        const PARAM = [accountId, Number(cnt), Number(cnt)];
+        await cqlClinet.execute(QUERY, PARAM, {prepare: true});
+        return res.status(200).json("Incremented RP");
+    } catch (err) {
+        return res.status(500).json(JSON.stringify(err));
+    }
+});
+
 module.exports = router;
