@@ -6,10 +6,10 @@
 
 ## APAC Roadmap: Latest Enhancements in the "APAC Edition"
 1. User-to-user communication via chat [implemented]
-5. Public sharing of posts [implemented]
-2. Advertisement posting dashboard with filtering for adult content [implemented]
-4. Extra statistical information on the reputation page [implemented]
-3. Rewarding top users with fund transfers based on RP score [pending implementation]
+2. Advertisement posting dashboard with scheduling and filtering for adult content [implemented]
+3. Extra statistical information on the reputation page [implemented]
+4. Public sharing of posts [implemented]
+5. Rewarding top users with fund transfers based on RP score [pending implementation]
 
 Project link - https://subdot.netlify.app
 
@@ -19,17 +19,28 @@ Demo video (Europe edition) - https://youtu.be/JVkSsFW-gHE
 
 ## Setup:
 1. Update the `allowedOrigins` value in the `src/utils/origins.js`
-2. Check `MongoDB setup` and `AstrDB (DBaaS for Cassandra)` to setup the databases
+2. Check `MongoDB setup` and `AstrDB (DBaaS for Cassandra)` to setup the databases (for storing stats, advertisements)
+3. Chech `` and `` to setup image filtering and storing (for advertisements)
+### GCP Vision AI setup:
+1. This is used to check for nsfw content in user advertisement image
+2. Enable the `Vision AI` API in your `Google Cloud` account
+3. Create `Credentials` and download the file to your `root` directory
+4. Rename the credentials file to `gcloud-creds.json`
+### Cloudinary setup:
+1. This is used to store `advertisement images`
+2. Create an account in `Cloudinary` from https://cloudinary.com/ and paste the `API credentials` in your `.env` file
 ### MongoDB setup:
-1. Create a `MongoDB` database from https://www.mongodb.com/ with a collection named `Subdot`
-2. Create `.env` file in the root directory with variable `MONGO_URL` assigned to the `mongodb uri` which can be found in the `Connect -> Connect your application` section of your mongo db database
-3. Make sure to select the `Node.JS` driver with the version `4.1 or later`
+1. This is used for indexing ie. searching of users through `explore` field in `Subdot`
+2. Create a `MongoDB` database from https://www.mongodb.com/ with a collection named `Subdot`
+3. Create `.env` file in the root directory with variable `MONGO_URL` assigned to the `mongodb uri` which can be found in the `Connect -> Connect your application` section of your mongo db database
+4. Make sure to select the `Node.JS` driver with the version `4.1 or later`
 ### AstrDB (DBaaS for Cassandra) setup:
-1. Create a `AstraDB` database from https://astra.datastax.com/ with a keyspace named `subdot`
-2. Use the `CQL Console` tab in the AstraDB database that you created to run the `CQL queries`
+1. This is used for managing `advertisements` and `user reputation stats`
+2. Create a `AstraDB` database from https://astra.datastax.com/ with a keyspace named `subdot`
+3. Use the `CQL Console` tab in the AstraDB database that you created to run the `CQL queries`
     1. Switch to `subdot` keyspace using the command `use subdot;`
     2. Run all the queries from the file `src/models/schema.cql`.
-3. Head to `Connect` tab in the AstraDB database that you created to connect from our backend
+4. Head to `Connect` tab in the AstraDB database that you created to connect from our backend
     1. Choose `Drivers` under `Select a Method`
     2. Select `Native` in `Type` under `Drivers` and select `Node.js`
     3. Download the `Secure Connect Bundle` (make sure to choose your region where your database resides)
@@ -40,10 +51,16 @@ Demo video (Europe edition) - https://youtu.be/JVkSsFW-gHE
 
 #### `Note`: Your `.env` file should look something like this. (kindly refer step 2 of `Setup` to fill the secrets)
 ```
-MONGO_URL =
+MONGO_URL = 
+
 ASTRA_CLIENT_ID = 
 ASTRA_SECRET = 
 ASTRA_KEYSPACE = 
+
+CLOUDINARY_CLOUD_NAME = 
+CLOUDINARY_API_KEY = 
+CLOUDINARY_API_SECRET = 
+CLOUDINARY_PRESET =
 ```
 
 ## Usage:
