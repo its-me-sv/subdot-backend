@@ -20,7 +20,7 @@ Demo video (Europe edition) - https://youtu.be/JVkSsFW-gHE
 ## Setup:
 1. Update the `allowedOrigins` value in the `src/utils/origins.js`
 2. Check `MongoDB setup` and `AstrDB (DBaaS for Cassandra)` to setup the databases (for storing stats, advertisements)
-3. Chech `` and `` to setup image filtering and storing (for advertisements)
+3. Chech `GCP Vision AI setup` and `Cloudinary setup` to setup image filtering and storing (for advertisements)
 ### GCP Vision AI setup:
 1. This is used to check for nsfw content in user advertisement image
 2. Enable the `Vision AI` API in your `Google Cloud` account
