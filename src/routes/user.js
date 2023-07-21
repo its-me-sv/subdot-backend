@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const User = require("../models/user");
+const cqlClinet = require("../utils/astra");
 
 // check username presence
 router.get("/username/:username", async (req, res) => {
@@ -122,6 +123,32 @@ router.put("/incr-rp/:accountId/:points", async (req, res) => {
             { $inc: {'reputation': Number(req.params.points)}}
         );
         return res.status(200).json("Incremented RP");
+    } catch (err) {
+        return res.status(500).json(JSON.stringify(err));
+    }
+});
+
+// fetch user's all time reputation stats
+router.get("/all-time-stats/:accountId", async (req, res) => {
+    try {
+        const {accountId} = req.params;
+        const QUERY = `
+            SELECT total_rp, e5p, p10f, ptg, ac
+            FROM user_reputation_all_time
+            WHERE user_id = ?;
+        `;
+        const PARAM = [accountId];
+        const data = await cqlClinet.execute(QUERY, PARAM, {prepare: true});
+        if (!data.rowLength) {
+            return res.status(200).json({
+                total_rp: 0,
+                e5p: 0,
+                p10f: 0,
+                ptg: 0,
+                ac: 1
+            });
+        }
+        return res.status(200).json(data.rows[0]);
     } catch (err) {
         return res.status(500).json(JSON.stringify(err));
     }
