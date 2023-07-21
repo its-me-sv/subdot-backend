@@ -175,4 +175,22 @@ router.get("/", async (req, res) => {
     }
 });
 
+// updating advertisement stats
+router.put("/:advert_id/:is_view", async (req, res) => {
+    try {
+        const {advert_id, is_view} = req.params;
+        const columnName = is_view === "true" ? "reach" : "clicks";
+        const QUERY = `
+            UPDATE advertisements_reach
+            SET ${columnName} = ${columnName} + 1
+            WHERE created_at = ?;
+        `;
+        const PARAM = [advert_id];
+        await cqlClient.execute(QUERY, PARAM, {prepare: true});
+        return res.status(200).json("SUCCESS");
+    } catch (err) {
+        return res.status(500).json(JSON.stringify(err));
+    }
+});
+
 module.exports = router;

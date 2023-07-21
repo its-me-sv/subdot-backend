@@ -18,7 +18,7 @@ const socketHandler = io => {
 
         socket.on("newAdvert", advert => {
             io.to("advert").emit("newAdvert", advert);
-            console.log(`[SOCKET] ${socket.id} published advertisement with id: ${advert._id}`);
+            console.log(`[SOCKET] ${socket.id} published advertisement with id: ${advert.id}`);
         });
 
         socket.on("newTx", (roomId, msg) => {
