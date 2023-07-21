@@ -60,6 +60,16 @@ const socketHandler = io => {
             socket.broadcast.to(roomId).emit("newMessageNotification", msg);
             console.log(`[SOCKET] ${socket.id} notified ${roomId}`);
         });
+
+        socket.on("newView", (roomId) => {
+            io.to(roomId).emit("newView", roomId);
+            console.log(`[SOCKET] ${socket.id} updated view for ${roomId}`);
+        });
+
+        socket.on("newClick", (roomId) => {
+            io.to(roomId).emit("newClick", roomId);
+            console.log(`[SOCKET] ${socket.id} updated click for ${roomId}`);
+        });
     });
 };
 
