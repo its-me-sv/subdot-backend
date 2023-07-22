@@ -11,6 +11,10 @@
 4. Public sharing of posts [implemented]
 5. Rewarding top users with fund transfers based on RP score [pending implementation]
 
+## Pow
+To verify that the code (for `APAC Roadmap`) was written during the `official hack period` (3 to 23 July 2023), kindly check the commit history [here](https://github.com/its-me-sv/subdot-backend/commits/main?after=9035fb04b0021f6d9eb358ac1104b2c184fc98a5+34&branch=main&qualified_name=refs%2Fheads%2Fmain) where there is no commit between `July 5, 2023 (2 days after the APAC opening ceremony)` and `March 17, 2023`. The same goes for the [frontend code](https://github.com/its-me-sv/subdot-frontend/commits/main?after=b869a13c79c753978403420949f2ee6559641cb5+104&branch=main&qualified_name=refs%2Fheads%2Fmain) as well
+
+## Links
 Project link - https://subdot.netlify.app
 
 Demo video (APAC edition) - https://youtu.be/JVkSsFW-gHE
