@@ -17,7 +17,7 @@ To verify that the code (for `APAC Roadmap`) was written during the `official ha
 ## Links
 Project link - https://subdot.netlify.app
 
-Demo video (APAC edition) - https://youtu.be/JVkSsFW-gHE
+Demo video (APAC edition) - https://youtu.be/xC0IGI8IIyI
 
 Demo video (Europe edition) - https://youtu.be/JVkSsFW-gHE
 
